@@ -29,7 +29,7 @@ codeigniter/
 * [CodeIgniter4](https://github.com/bcit-ci/CodeIgniter4)
 * `composer` command (See [Composer Installation](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx))
 * Git
-* [Utils.so](download from https://github.com/titounnes/kumpulan_library/tree/master/extension) (php-extension JWT for Linux)
+* [Utils.so](https://github.com/titounnes/kumpulan_library/tree/master/extension) (php-extension JWT for Linux)
 
 ## How to Use
 
