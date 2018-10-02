@@ -3,7 +3,6 @@ namespace App\Controllers\Api;
 
 Use App\Models\Users\Guest\Auth;
 Use App\Controllers\Api\Base;
-use Firebase\JWT\JWT;
     
 class Guest extends Base 
 {

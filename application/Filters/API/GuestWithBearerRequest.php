@@ -7,6 +7,7 @@ use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
+use Firebase\JWT\JWT;
 
 final class GuestWithBearerRequest implements FilterInterface
 {
@@ -14,13 +15,18 @@ final class GuestWithBearerRequest implements FilterInterface
     {
         if($request->getMethod() === 'post' && $request->isAJAX()===TRUE && $request->getServer('HTTP_BEARER') !== NULL)
         {
-            $token = \Utils\Jwt::decode($request->getServer('HTTP_BEARER'));
-            if($token['code'] === 0)
-            {
-                return Services::response()
-                    ->setStatusCode(ResponseInterface::HTTP_FORBIDDEN);
-            }
+            $token = JWT::decode($request->getServer('HTTP_BEARER'), (Config('Jwt'))->key, [(Config('Jwt'))->algo]);
+            
+            if($token){
 
+                if($token->expired_at < strtotime('+0')){
+                    return Services::response()
+                    ->setStatusCode(ResponseInterface::HTTP_FORBIDDEN);    
+                }
+
+                return (config('App'))->session = ['id' => $token->id];
+            }
+            
             return (config('App'))->session = [
                 'id'=> $token['data']->id
             ];

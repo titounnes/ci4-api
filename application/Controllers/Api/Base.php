@@ -5,6 +5,7 @@ namespace App\Controllers\Api;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\API\ResponseTrait;
+use Firebase\JWT\JWT;
     
 class Base extends Controller 
 {
@@ -20,11 +21,15 @@ class Base extends Controller
 
     protected function success($data = [], $action = '', $tokenData = null)
     {
+        if(is_object($tokenData)){
+            $tokenData->expired_at = strtotime('+30 minutes');
+        }
+
         return $this->respond([
             'message' => 'Proses berhasil.',
             'action' => $action,
             'data' => $data,
-            'token' => $tokenData ? (\Utils\Jwt::encode($tokenData))['token']: $this->request->getServer('HTTP_BEARER'),
+            'token' => $tokenData ? JWT::encode($tokenData, (Config('Jwt'))->key, (Config('Jwt'))->algo) : $this->request->getServer('HTTP_BEARER'),
         ]);
     }
 }

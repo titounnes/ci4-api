@@ -12,6 +12,7 @@ final class GuestRequest implements FilterInterface
 {
     public function before(RequestInterface $request)
     {
+        return true;
         if($request->getMethod() === 'post' && $request->isAJAX()===TRUE)
         {
             return true;
