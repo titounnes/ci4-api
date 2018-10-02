@@ -23,13 +23,15 @@ class Base extends Controller
     {
         if(is_object($tokenData)){
             $tokenData->expired_at = strtotime('+30 minutes');
+        }else{
+            (Config('App'))->session->expired_at = strtotime('+30 minutes');
         }
 
         return $this->respond([
             'message' => 'Proses berhasil.',
             'action' => $action,
             'data' => $data,
-            'token' => $tokenData ? JWT::encode($tokenData, (Config('Jwt'))->key, (Config('Jwt'))->algo) : $this->request->getServer('HTTP_BEARER'),
+            'token' => JWT::encode(is_object($tokenData) ? $tokenData : (Config('App'))->session, (Config('Jwt'))->key, (Config('Jwt'))->algo),
         ]);
     }
 }

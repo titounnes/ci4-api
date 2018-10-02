@@ -8,7 +8,7 @@ class Data extends \App\Models\Courses\Base
         return $this
             ->select('id,title')
             ->join('lecturers','lecturers.course_id=courses.id','inner')
-            ->where('lecturers.teacher_id',config('App')->session['id'])
+            ->where('lecturers.teacher_id',config('App')->session->id)
             ->like('title',$title)
             ->asObject()
             ->findAll();

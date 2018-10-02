@@ -28,10 +28,7 @@ final class UserLoginRequest implements FilterInterface
 
                 if( in_array((explode('/',$request->getServer('REQUEST_URI')))[2], explode('|', $token->roles)) )
                 {
-                    return (config('App'))->session = [
-                        'id' => $token->id,
-                        'telegram' => $token->telegram,
-                    ];
+                    return (config('App'))->session = $token;
                 }
 
                 return Services::response()
