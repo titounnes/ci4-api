@@ -35,6 +35,9 @@ codeigniter/
 * Run http://localhost/index.html (For Api testing)
 * Run http://localhost/api/ (For Access web service)
 
+## Demo
+
+* Run demo on https://api-ci4.e-project-tech.com/index.html# 
 ## Reference
 
 * [Composer Installation](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
