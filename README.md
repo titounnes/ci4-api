@@ -28,7 +28,7 @@ codeigniter/
 * PHP 7.1 or later
 * `composer` command (See [Composer Installation](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx))
 * Git
-* Utils.so (download from ) 
+* Utils.so (download from https://github.com/titounnes/kumpulan_library/tree/master/extension) 
 
 ## How to Use
 
