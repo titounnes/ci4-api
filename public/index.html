@@ -1,0 +1,99 @@
+<head>
+<link href="http://e-project-tech.com/assets/css/pulse/bulmaswatch.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Pengujian API dengan Codeigniter 4</h1>
+        <div class="section">
+            <div class="columns">
+                <div class="column">
+                    <h2 class="title">Parameter</h2>
+                    <p class="control">Domain: <span class="field"><input class="input" id="domain" value="http://ci4.ano/api/" name="domain"></span></p>
+                    <p class="control">Route: <div class="field"><span class="select"><select class="dropdown" id="route" value="" name="route" placeholder="Pilih route"></select></span></div></p>
+                    <p class="control">Bearer: <div class="field"><input class="input" id="bearer" value="" name="bearer"></div></p>
+                    <p class="control">Param: <div class="field"><input class="input" id="param" value="" placeholder="param1=foo&param2=bar" name="param"></div></p>
+                    <p class="control">Method: <div class="field"><span class="select"><select class="select" id="method" name="method"><option value="POST">POST</option><option value="GET">GET</option></select></span></div></p>
+                    <p class="control"><a href="#" class="button is-primary is-rounded" id="btn">Execute</a></p>
+                </div>
+                <div class="column">
+                    <h3 class="title">Hasil</h3>
+                    <p class="control">Status: <textarea class="input" style="resize:none" id="status" readonly placeholder="status"></textarea></p>
+                    <p class="control">Pesan: <textarea class="input" style="resize:none" id="message" readonly placeholder="psan"></textarea></p>
+                    <p class="control">Data: <textarea class="input" style="height:300px;resize:none" id="data" readonly placeholder="data"></textarea></p>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="http://e-project-tech.com/assets/js/jquery.min.js"></script>
+<script>
+var route = [
+    'guest/postIdentity',
+    'guest/postPassword',
+    'guest/requestToken',
+    'teacher/Course',
+];
+var param = {
+    'guest/postIdentity': 'identity=pengajar',
+    'guest/postPassword': 'password=pengajar',
+    'teacher/Course': 'title=',
+}
+var errorMsg = {
+    405: 'Method tidak diijinkan',
+    404: 'Url tidak valid',
+};
+var jwt = localStorage['jwt'];
+$(document).ready(function(){
+    var optRoute = '<option value="">Pilih Salah satu</option>';
+    $.each(route, function(i, v){
+        optRoute += '<option value="'+v+'">'+v+'</option>';
+    })
+    $('#route').html(optRoute);
+    $(document).on('click', '#btn', function(){
+        if($('#domain').val() ==''){
+            return $('#status').html('data belum diisi');
+        }
+        $('#status').html('Menunggu hasil ....')
+        $('#message').html('');
+        $('#data').html('');
+        $('#jwt').html('');
+        $.ajax({
+            url: $('#domain').val()+$('#route').val(),
+            crossDomain: true,
+            dataType: 'json',
+            headers: {
+                "Bearer": $('#bearer').val(),
+                "X-Requested-With": 'XMLHTTPRequest',
+            },
+            method: $('#method').val(),
+            data: '{&'+$('#param').val()+'&}',
+            complete: function(response){                
+                if(response.status == 200){
+                    $('#status').html('OK: '+response.status);    
+                    $('#message').html(response.responseJSON.message);
+                    $('#data').html(JSON.stringify( response.responseJSON.data));
+                    $('#jwt').html(response.responseJSON.token);
+                    console.log(response.responseJSON.token)
+                    if(response.responseJSON.token!=''){
+                        localStorage['jwt'] = response.responseJSON.token;
+                    }
+                    return false;
+                }
+                //console.clear();
+                $('#status').html('Error: '+response.status);
+                $('#message').html(errorMsg[response.status]);
+                $('#data').html('');
+                $('#jwt').html('');
+            }
+        })
+    })
+    $(document).on('change','#route', function(){
+        $('#param').val(param[$(this).val()]);
+	if($(this).val()!='guest/postIdentity'){
+            $('#bearer').val(localStorage['jwt'])
+        }else{
+            $('#bearer').val('')
+        }
+    })
+})
+</script>        
+</body>

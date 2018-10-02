@@ -1,0 +1,13 @@
+{
+	"description" : "The CodeIgniter4 Application with Composer",
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/bcit-ci/CodeIgniter4"
+		}
+	],
+	"require": {
+		"php": ">=7.0.0",
+		"codeigniter4/framework": "dev-develop"
+	}
+}
