@@ -26,9 +26,10 @@ codeigniter/
 ## Requirements
 
 * PHP 7.1 or later
+* [CodeIgniter4](https://github.com/bcit-ci/CodeIgniter4)
 * `composer` command (See [Composer Installation](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx))
 * Git
-* Utils.so (download from https://github.com/titounnes/kumpulan_library/tree/master/extension) 
+* [Utils.so](download from https://github.com/titounnes/kumpulan_library/tree/master/extension) (php-extension JWT for Linux)
 
 ## How to Use
 
@@ -37,7 +38,7 @@ codeigniter/
 
 ## Demo
 
-* Run demo on https://api-ci4.e-project-tech.com/index.html# 
+* Run demo on [here](https://api-ci4.e-project-tech.com/index.html#) 
 
 ## Donasi
 * [Paypal](https://www.paypal.me/harjito) 
